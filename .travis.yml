@@ -10,4 +10,4 @@ before_install:
 before_script:
   - phantomjs --version
   - casperjs --version
-  - casperjs googleplus.js --username=altryne2 --password=THISISNOTMYPASSWORD --text="Don’t Expect A Full Read/Write Google+ API Anytime Soon, Google Doesn’t Want To Disrupt Something “Magical” | TechCrunch http://a-w.me/14PzvTR"
+  - casperjs googleplus.js --username=altryne2 --password=THISISNOTMYPASSWORD --text="lalalalalaa| TechCrunch http://a-w.me/14PzvTR"
