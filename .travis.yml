@@ -11,3 +11,9 @@ before_script:
   - phantomjs --version
   - casperjs --version
   - casperjs googleplus.js --username=altryne2 --password=THISISNOTMYPASSWORD --text="lalalalalaa| TechCrunch http://a-w.me/14PzvTR"
+
+after_script:
+  - git checkout posts
+  - git add .
+  - git commit -am "adding stuff"
+  - git push origin posts
