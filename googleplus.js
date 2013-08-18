@@ -40,6 +40,7 @@ casper.then(function(){
 
 casper.waitForUrl(/LoginVerification/g,function(){
     console.warn('google asked for login verification')
+    this.debugPage()
     challengetype_answer = (verify_email.length > 0) ? 'RecoveryEmailChallenge' : 'PhoneVerificationChallenge' ;
     this.fill('#challengeform',{
         'challengetype' : challengetype_answer,
