@@ -60,31 +60,28 @@ casper.then(function(){
 })
 casper.wait(5000)
 
-casper.withFrame(1, function() {
-    this.wait(5000)
-    this.click('div[guidedhelpid="sharebox_editor"] [role="textbox"]')
+casper.withFrame('gbsf', function() {
+    this.click('div[guidedhelpid="sharebox_editor"]')
     this.wait(2000)
     this.sendKeys('div[guidedhelpid="sharebox_editor"] [role="textbox"]',text,{keepFocus: false})
     this.sendKeys('div[guidedhelpid="sharebox_editor"] [role="textbox"]',' ',{keepFocus: false})
     this.wait(3000)
     urls = text.match(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/)
-    if(urls.length > 0)
-    this.click('span[title="Add link"]')
-    this.sendKeys('[guidedhelpid="sharebox_icons"] input[type="text"]',urls[0],{keepFocus:true})
-    this.wait(2000,function(){
-        this.clickLabel('Add')
-    })
+    if(usharrls && urls.length > 0){
+        this.click('span[title="Add link"]')
+        this.sendKeys('[guidedhelpid="sharebox_icons"] input[type="text"]',urls[0],{keepFocus:true})
+        this.wait(2000,function(){
+            this.clickLabel('Add')
+        })
+    }
 
     /** THIS IS WHERE I NEED TO FIGURE OUT HOW TO "SUBMIT" THE LINK TO GOOGLE+ TO IDENTIFY! **/
 
-    this.wait(5000)
-    this.capture('share1.png', {top: 0, left: 0, width: 960, height: 600 });
-
-    this.wait(1000)
+//    this.capture('share1.png', {top: 0, left: 0, width: 960, height: 600 });
 
     this.clickLabel('Share')
-    this.capture('share2.png', {top: 0, left: 0, width: 960, height: 600 });
-    console.log();
+//    this.capture('share2.png', {top: 0, left: 0, width: 960, height: 600 });
+
 });
 
 casper.on('load.failed', function() {
@@ -95,6 +92,7 @@ casper.on('load.failed', function() {
 
 casper.on('error', function(msg, backtrace) {
     console.log('Error: ' + msg);
+    this.debugPage();
     this.capture('error_2.png', {top: 0, left: 0, width: 800, height: 600 });
     this.exit();
 });
@@ -102,14 +100,15 @@ casper.on('error', function(msg, backtrace) {
 casper.on('timeout', function() {
     this.echo('PAGE TIMEOUTED!')
     console.log('The webpage timed out.');
+    this.debugPage();
     this.capture('error_3.png', {top: 0, left: 0, width: 800, height: 600 });
     this.exit();
 });
 
 casper.on('step.timeout', function() {
     this.echo('PAGE TIMEOUTED!')
-    console.log('The webpage timed out.');
-    this.capture('error_3.png', {top: 0, left: 0, width: 800, height: 600 });
+    this.debugPage();
+    this.capture('error_4.png', {top: 0, left: 0, width: 800, height: 600 });
     this.exit();
 });
 
@@ -118,19 +117,22 @@ casper.on("page.error", function(msg, trace) {
 });
 
 casper.on('step.error', function(err) {
-    this.capture('error_3.png', {top: 0, left: 0, width: 800, height: 600 });
+    this.debugPage();
+    this.capture('error_6.png', {top: 0, left: 0, width: 800, height: 600 });
     this.die("Step has failed: " + err);
 });
 
 casper.on('complete.error', function() {
     console.log('Something went wrong!');
-    this.capture('error_3.png', {top: 0, left: 0, width: 800, height: 600 });
+    this.debugPage();
+    this.capture('error_7.png', {top: 0, left: 0, width: 800, height: 600 });
     this.exit();
 });
 
 casper.on('page.error', function(msg, backtrace) {
     console.log('There was an error loading the webpage.');
-    this.capture('error_4.png', {top: 0, left: 0, width: 800, height: 600 });
+    this.debugPage();
+    this.capture('error_8.png', {top: 0, left: 0, width: 800, height: 600 });
     this.exit();
 });
 
