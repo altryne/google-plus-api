@@ -7,7 +7,7 @@ var _ = require('underscore');
 try {
     var config = require('./config');
 } catch (e) {
-    console.log('Please check your require config file');
+    console.log('Please check your required config file');
     process.exit(1)
 }
 var updates = [];
@@ -24,7 +24,7 @@ function init() {
 
     }
     getBufferUpdates();
-    setInterval(getBufferUpdates,1000 * 1 * 5)
+    setInterval(getBufferUpdates,1000 * 60)
 
     postUpdatedToGoogle();
     setInterval(postUpdatedToGoogle,1000 * 5)
@@ -35,7 +35,9 @@ function getBufferUpdates(is_first_time){
     var params = {since : last_buffer_fetch_utc ,count:5};
     url = 'profiles/' + config.buffer_conf.profile_id + '/updates/sent.json';
     bufferAPI(url,function(body){
-//        console.log('Got ' + body.total + ' updates from buffer, number of new : ' + body.updates.length);
+        if(body.updates.legth > 0){
+            console.log('Got ' + body.total + ' updates from buffer, number of new : ' + body.updates.length);
+        }
         updates = updates.concat(body.updates);
         last_buffer_fetch_utc = parseInt(+Date.now() / 1000);
     },params)
@@ -47,8 +49,9 @@ function postUpdatedToGoogle(){
         return
     }
     _.each(updates,function(el,i,list){
-        console.log('Posting update to google+' ,el.text);
-        exec('casperjs googleplus.js --username='+ config.google_conf.email +' --password='+config.google_conf.password+' --text="'+ el.text +'"',function(e,stdout,stderr){
+        console.log('Posting update to google+ : ' ,el.text);
+        work_dir = (process.env["WORKING_DIR"])? process.env["WORKING_DIR"] : require('path').join(__dirname);
+        exec('cd ' +work_dir+';casperjs googleplus.js --username='+ config.google_conf.email +' --password='+config.google_conf.password+' --text="'+ el.text +'"',function(e,stdout,stderr){
             sys.puts(stdout);
             console.log(e);
         });

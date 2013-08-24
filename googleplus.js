@@ -47,7 +47,7 @@ casper.waitForUrl(/LoginVerification/g,function VerifyGoogleAccount(){
         'emailAnswer'   : verify_email
     },true)
 },function(){
-    console.warn('Google did not ask for verification')
+//    console.warn('Google did not ask for verification')
 },1000)
 
 casper.waitForUrl(/google.com/g,function GoToGoogleCom(){
@@ -69,11 +69,11 @@ casper.withFrame('gbsf', function SubmitPostToGooglePlus() {
     this.click('div[guidedhelpid="sharebox_editor"]')
     this.sendKeys('div[guidedhelpid="sharebox_editor"] [role="textbox"]',text + '\r\n',{keepFocus: true})
     this.wait(2000,function WaitingForShare(){
-//        this.capture('share2.png', {top: 0, left: 0, width: 960, height: 600 });
+        this.capture('shared_screenshot.png', {top: 0, left: 0, width: 960, height: 600 });
         this.clickLabel('Share')
     })
 
-    this.wait(2000,function WaitingForGoogleToSubmit(){
+    this.wait(5000,function WaitingForGoogleToSubmit(){
         casper.warn('Posted to google+ !')
     })
 });
