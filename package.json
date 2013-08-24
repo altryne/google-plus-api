@@ -1,11 +1,31 @@
 {
   "name": "googleplusapi",
+  "description": "Node application to watch buffer and post to google+",
   "version": "0.0.1",
   "dependencies": {
-    "express": "3.1.x"
+    "request": "2.27.0",
+    "underscore": "~1.5.1"
   },
   "engines": {
     "node": "0.10.x",
     "npm": "1.2.x"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "readmeFilename": "README.md",
+  "main": "casperjs_example.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/altryne/google-plus-api.git"
+  },
+  "keywords": [
+    "node",
+    "googleplus",
+    "api",
+    "buffer"
+  ],
+  "author": "Alex Volkov",
+  "license": "BSD"
 }

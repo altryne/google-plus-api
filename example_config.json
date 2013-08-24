@@ -1,0 +1,10 @@
+{
+    "buffer_conf": {
+        "service": "linkedin",
+        "access_token": ""
+    },
+    "google_conf": {
+        "email": "YOUREMAILHERE",
+        "password": "YOURPASSWORDHERE"
+    }
+}
