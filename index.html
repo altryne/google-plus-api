@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Buffer to Google+ Hook with Casper.js by altryne</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Buffer to Google+ Hook with Casper.js</h1>
+          <h2>A nodejs script/daemon that will connect with Buffer API and post to google+ when new updates were submitted via buffer</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/altryne/google-plus-api/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/altryne/google-plus-api/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/altryne/google-plus-api" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h2>
+<a name="how-does-this-work" class="anchor" href="#how-does-this-work"><span class="octicon octicon-link"></span></a>How does this work?</h2>
+
+<p>If you've ever wondered why buffer does not share to google+, it's because google+ doesn't have an publicly available API.</p>
+
+<p>Using Casper.js, the script opens google+ sharing page in a hidden(headless) browser, and posts the update received from buffer API.</p>
+
+<h2>
+<a name="requirenments" class="anchor" href="#requirenments"><span class="octicon octicon-link"></span></a>Requirenments</h2>
+
+<ul>
+<li>Node.js</li>
+<li>Phantomjs</li>
+<li>Casperjs</li>
+</ul><h2>
+<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<ul>
+<li>Clone the repo</li>
+<li>Make sure you have casperjs on your path - <code>casperjs --version</code>
+</li>
+<li>Install npm requirenments - <code>npm install</code>
+</li>
+<li>Obtain a buffer <strong>Access Token</strong>
+
+<ul>
+<li>Go here : <a href="https://bufferapp.com/developers/apps/create">Buffer Developer site</a>
+</li>
+<li>Create an example app, and copy the <strong>Access Token</strong> you receive </li>
+<li>Wait 2 min and go to <a href="http://bufferapp.com/developers/apps">http://bufferapp.com/developers/apps</a> to obtain your Access Token.</li>
+</ul>
+</li>
+<li>Save <strong>example_config.json</strong> as <strong>config.json</strong> and edit it with your Access Token, Google+ Username and password.</li>
+<li>In the <strong>service</strong> field, choose to which of your buffer accounts this script will listen. Can be one of <code>twitter</code>, <code>facebook</code>, <code>linkedin</code>
+</li>
+</ul><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"buffer_conf"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"service"</span><span class="p">:</span> <span class="s2">"linkedin"</span><span class="p">,</span>
+        <span class="nt">"access_token"</span><span class="p">:</span> <span class="s2">"BUFFER_ACCESS_TOKEN"</span>
+    <span class="p">},</span>
+    <span class="nt">"google_conf"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"email"</span><span class="p">:</span> <span class="s2">"YOUREMAILHERE"</span><span class="p">,</span>
+        <span class="nt">"password"</span><span class="p">:</span> <span class="s2">"YOURPASSWORDHERE"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>This script requires your google <strong>username/password</strong>, but as it's running locally, it's not a HUGE security risk, just a mild one. </li>
+</ul><h2>
+<a name="running-the-server" class="anchor" href="#running-the-server"><span class="octicon octicon-link"></span></a>Running the server</h2>
+
+<div class="highlight"><pre>node app.js
+</pre></div>
+
+<h2>
+<a name="installing-as-a-service-on-mac-osx" class="anchor" href="#installing-as-a-service-on-mac-osx"><span class="octicon octicon-link"></span></a>Installing as a service on mac osx</h2>
+
+<pre><code>sudo node mac_daemon.js install
+</code></pre>
+
+<p>This will install the node server as a damon on your mac, that should work and reset itself on fails / restarts. 
+This requires sudo priveleges.</p>
+
+<p>After service is Installed, logs can be viewed in <code>/Library/Logs/Buffer to Google+/buffertogoogle.log</code></p>
+
+<p>To uninstall the server <code>sudo node mac_daemon.js uninstall</code></p>
+
+<h2>
+<a name="why" class="anchor" href="#why"><span class="octicon octicon-link"></span></a>Why?</h2>
+
+<p>This was done as a proof of concept. Getting Casperjs script to post to google was challenging and it was fun. </p>
+
+<h2>
+<a name="desclaimer" class="anchor" href="#desclaimer"><span class="octicon octicon-link"></span></a>Desclaimer</h2>
+
+<p>WHile this code doesn't do anything harmful like saving your password (check for youself, it's all here), it doesn't stop someone from accessing your computer and reading the config.json.</p>
+
+<h3>
+<a name="use-at-your-own-risk" class="anchor" href="#use-at-your-own-risk"><span class="octicon octicon-link"></span></a>USE AT YOUR OWN RISK</h3>
+
+<p>I'm not responsible for any damages that using this script may provide you.</p>
+        </section>
+
+        <footer>
+          Buffer to Google+ Hook with Casper.js is maintained by <a href="https://github.com/altryne">altryne</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
