@@ -63,6 +63,13 @@ To uninstall the server ``sudo node mac_daemon.js uninstall``
 ##Why?
 This was done as a proof of concept. Getting Casperjs script to post to google was challenging and it was fun. 
 
+##Known Issues
+Because this is a hack, and google+ doesn't have a public API, some issues arrose.
+
+- Doesn't work if you have 2 step authentication enabled
+- Doesn't work on remote servers, I initially wanted this to run on heroku, can't be done
+- Has to run from any location google already seen you logging in
+
 ##Desclaimer
 WHile this code doesn't do anything harmful like saving your password (check for youself, it's all here), it doesn't stop someone from accessing your computer and reading the config.json.
 ###USE AT YOUR OWN RISK
