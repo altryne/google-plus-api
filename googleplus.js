@@ -18,14 +18,19 @@ username = casper.cli.get("username")
 password = casper.cli.get("password")
 text     = casper.cli.get("text")
 
-
-casper.start('https://accounts.google.com/ServiceLogin?hl=en&continue=https://www.google.com/ncr', function LoginWithGoogle() {
+casper.start('https://www.google.com/ncr', function () {
     this.viewport(800, 600);
     console.info('Starting Casper');
-    this.fillSelectors('form#gaia_loginform', {
-        'input[name="Email"]':    username,
-        'input[name="Passwd"]':    password
-    }, true);
+
+    if (! (this.getHTML().indexOf(username) > -1)) {
+        console.info('## Login ...');
+        this.thenOpen('https://accounts.google.com/ServiceLogin?hl=en&continue=https://www.google.com/ncr', function() {
+            this.fillSelectors('form#gaia_loginform', {
+                'input[name="Email"]':    username,
+                'input[name="Passwd"]':    password
+            }, true);
+        });
+    }
 });
 
 casper.then(function CheckIfGoogleWantsVerification(){

@@ -51,7 +51,7 @@ function postUpdatedToGoogle(){
     _.each(updates,function(el,i,list){
         console.log('Posting update to google+ : ' ,el.text);
         work_dir = (process.env["WORKING_DIR"])? process.env["WORKING_DIR"] : require('path').join(__dirname);
-        exec('cd ' +work_dir+';casperjs googleplus.js --username='+ config.google_conf.email +' --password='+config.google_conf.password+' --text="'+ el.text +'"',function(e,stdout,stderr){
+        exec('cd ' +work_dir+';casperjs googleplus.js --cookies-file=cookies.txt --username='+ config.google_conf.email +' --password='+config.google_conf.password+' --text="'+ el.text +'"',function(e,stdout,stderr){
             sys.puts(stdout);
             console.log(e);
         });
